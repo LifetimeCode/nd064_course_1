@@ -41,7 +41,7 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
-      app.logger.info(current_timestamp + ', Article ID "' + str(post_id) + '" was not found! 404 page is returned')
+      app.logger.error(current_timestamp + ', Article ID "' + str(post_id) + '" was not found! 404 page is returned')
       return render_template('404.html'), 404
     else:
       post_title = post[2]
