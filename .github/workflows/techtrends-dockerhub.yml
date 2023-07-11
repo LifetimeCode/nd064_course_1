@@ -38,4 +38,4 @@ jobs:
           file: ./project/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: techtrends:latest
+          tags: amour3000/techtrends:latest
