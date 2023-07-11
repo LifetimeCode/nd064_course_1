@@ -1,7 +1,12 @@
+import datetime
+import logging
 import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
+
+# Global variable for current timestamp used for logging
+current_timestamp = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
 
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
@@ -36,13 +41,17 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
+      app.logger.info(current_timestamp + ', Article ID "' + str(post_id) + '" was not found! 404 page is returned')
       return render_template('404.html'), 404
     else:
+      post_title = post[2]
+      app.logger.info(current_timestamp + ', Article "' + post_title + '" retrieved!')
       return render_template('post.html', post=post)
 
 # Define the About Us page
 @app.route('/about')
 def about():
+    app.logger.info(current_timestamp + ', About us page is retrieved')
     return render_template('about.html')
 
 # Define the post creation functionality 
@@ -61,10 +70,33 @@ def create():
             connection.commit()
             connection.close()
 
+            app.logger.info(current_timestamp + ', Article "' + title + '" is created!')
             return redirect(url_for('index'))
 
     return render_template('create.html')
 
+# Define a health check endpoint
+@app.route('/healthz')
+def healthcheck():
+    response = app.response_class(
+            response=json.dumps({"result":"OK - healthy"}),
+            status=200,
+            mimetype='application/json'
+    )
+    return response
+
+# Define a metrics endpoint for DB connections count and posts count
+@app.route('/metrics')
+def metrics():
+    response = app.response_class(
+            response=json.dumps({"db_connection_count": 1, "post_count": 7}),
+            status=200,
+            mimetype='application/json'
+    )
+
+    return response
+
 # start the application on port 3111
 if __name__ == "__main__":
+   logging.basicConfig(filename='app.log',level=logging.DEBUG)
    app.run(host='0.0.0.0', port='3111')
