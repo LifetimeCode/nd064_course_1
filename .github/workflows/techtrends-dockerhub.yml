@@ -8,6 +8,10 @@ on:
     branches:
       - 'main'
 
+defaults:
+  run:
+    working-directory: ./project
+       
 ## List the steps to be executed by the workflow
 jobs:
   ## Set the name of the job
@@ -34,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: project/Dockerfile
+          file: ./Dockerfile
           platforms: linux/amd64
           push: true
           tags: techtrends:latest
