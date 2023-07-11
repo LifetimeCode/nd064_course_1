@@ -8,10 +8,6 @@ on:
     branches:
       - 'main'
 
-defaults:
-  run:
-    working-directory: ./project
-       
 ## List the steps to be executed by the workflow
 jobs:
   ## Set the name of the job
