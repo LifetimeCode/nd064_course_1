@@ -1,11 +1,50 @@
 ## Docker commands used to build the application 
-# TODO: insert the docker build command
+docker build -f ./project/Dockerfile  -t techtrends ./project
 
 ## Docker commands used to run the application
-# TODO: insert the docker run command
+docker run -d -p 7111:3111 techtrends:latest
 
 ## Docker commands used to get the application logs
-# TODO: insert the docker logs command
+docker logs 16e1d6475779355e79f81fa3a46076838d6155cfa8964016014760ee74185d11
 
 ## Logs from the container running the TechTrends application
-# TODO: paste logs from the Docker container 
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: off
+WARNING:werkzeug: * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+INFO:werkzeug: * Running on http://172.17.0.2:3111/ (Press CTRL+C to quit)
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:34] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:34] "GET /robots.txt?1689060454890 HTTP/1.1" 404 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:34] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:app:07/11/2023, 07:27:18, Article "2020 CNCF Annual Report" retrieved!
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:39] "GET /1 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:39] "GET /robots.txt?1689060459450 HTTP/1.1" 404 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:39] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:app:07/11/2023, 07:27:18, About us page is retrieved
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:42] "GET /about HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:42] "GET /robots.txt?1689060462961 HTTP/1.1" 404 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:42] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:46] "GET /create HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:46] "GET /robots.txt?1689060466682 HTTP/1.1" 404 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:46] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:app:07/11/2023, 07:27:18, Article "Test 1" is created!
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:56] "POST /create HTTP/1.1" 302 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:56] "GET / HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:56] "GET /robots.txt?1689060476809 HTTP/1.1" 404 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:56] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:56] "GET /robots.txt?1689060476809 HTTP/1.1" 404 -
+INFO:app:07/11/2023, 07:27:18, Article "Test 1" retrieved!
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:28:02] "GET /7 HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:28:02] "GET /robots.txt?1689060482150 HTTP/1.1" 404 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:28:02] "GET /static/css/main.css HTTP/1.1" 304 -
+ERROR:app:07/11/2023, 07:27:18, Article ID "77" was not found! 404 page is returned
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:28:07] "GET /77 HTTP/1.1" 404 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:28:07] "GET /robots.txt?1689060487427 HTTP/1.1" 404 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:28:07] "GET /static/css/main.css HTTP/1.1" 304 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:28:13] "GET /metrics HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:28:13] "GET /robots.txt?1689060493425 HTTP/1.1" 404 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:28:18] "GET /healthz HTTP/1.1" 200 -
+INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:28:18] "GET /robots.txt?1689060498527 HTTP/1.1" 404 -
