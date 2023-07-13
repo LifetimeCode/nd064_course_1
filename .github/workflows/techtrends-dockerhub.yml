@@ -20,9 +20,7 @@ jobs:
           images: |
             amour3000/techtrends
           tags: |
-            type=ref,event=branch
             type=ref,event=tag
-            type=semver,pattern={{version}}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
