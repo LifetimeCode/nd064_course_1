@@ -24,7 +24,7 @@ resources:
 
 service:
   port: 4111
-  targetPort: 3111
+  # targetPort: 3111
   protocol: TCP
 
 serviceType: ClusterIP
