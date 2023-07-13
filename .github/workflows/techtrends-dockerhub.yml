@@ -21,7 +21,6 @@ jobs:
           images: |
             amour3000/techtrends
           tags: |
-            type=ref,event=branch
             type=ref,event=tag
       -
         name: Set up QEMU
