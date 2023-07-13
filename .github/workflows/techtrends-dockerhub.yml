@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - 'main'
+    tags:
+      - "v*"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,6 +21,7 @@ jobs:
             amour3000/techtrends
           tags: |
             type=ref,event=branch
+            type=ref,event=tag
             type=semver,pattern={{version}}
       -
         name: Set up QEMU
