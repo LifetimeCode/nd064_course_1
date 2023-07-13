@@ -28,5 +28,3 @@ service:
   protocol: TCP
 
 serviceType: ClusterIP
-
-containerPort: 3111
