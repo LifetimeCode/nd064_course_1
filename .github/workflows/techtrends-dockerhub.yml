@@ -1,34 +1,24 @@
-##  Named of the workflow.
 name: TechTrends - Package with Docker
-## Set the trigger policy.
-## In this case, the workflow is execute on a `push` event,
-## or when a new commit is pushed to the repository
 on:
   push:
     branches:
       - 'main'
-
-## List the steps to be executed by the workflow
+    tags:
+      - "v*"
 jobs:
-  ## Set the name of the job
   build:
-    ## Configure the operating system the workflow should run on.
-    ## In this case, the job on Ubuntu
     runs-on: ubuntu-latest
-    ## Define a sequence of steps to be executed 
     steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
       -
         name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
-          # list of Docker images to use as base name for tags
           images: |
             amour3000/techtrends
-          # generate Docker tags based on the following events/attributes
-          tags: |
-            type=ref,event=branch
-            type=semver,pattern={{version}}
       -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -41,7 +31,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - uses: actions/checkout@v3
       -
         name: Build and push
         uses: docker/build-push-action@v4
