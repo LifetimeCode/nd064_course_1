@@ -38,5 +38,5 @@ spec:
             memory: {{ .Values.resources.limits.memory }} 
             cpu: {{ .Values.resources.limits.cpu }} 
         ports:
-        - containerPort: {{ .Values.ports.containerPort }} 
+        - containerPort: {{ .Values.service.targetPort }} 
           protocol: {{ .Values.ports.protocol }} 

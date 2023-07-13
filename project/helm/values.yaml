@@ -22,9 +22,9 @@ resources:
     memory: "128Mi"
     cpu: "500m"
 
-ports:
-  servicePort: 4111
-  containerPort: 3111
+service:
+  port: 4111
+  targetPort: 3111
   protocol: TCP
 
 serviceType: ClusterIP
