@@ -1,8 +1,8 @@
 namespace:
   name: prod
 
-ports:
-  servicePort: 7111
+service:
+  port: 7111
 
 replicaCount: 5
 
