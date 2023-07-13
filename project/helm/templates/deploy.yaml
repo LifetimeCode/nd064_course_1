@@ -25,11 +25,11 @@ spec:
         livenessProbe:
             httpGet:
               path: {{ .Values.livenessProbe.path }} 
-              port: {{- if .Values.service.targetPort }} {{ .Values.service.targetPort }} {{ else }} {{ .Values.service.port }} {{ end }}
+              port: {{ .Values.containerPort }}
         readinessProbe:
             httpGet:
               path: {{ .Values.readinessProbe.path }} 
-              port: {{- if .Values.service.targetPort }} {{ .Values.service.targetPort }} {{ else }} {{ .Values.service.port }} {{ end }}
+              port: {{ .Values.containerPort }}
         resources:
           requests:
             memory: {{ .Values.resources.requests.memory }} 
@@ -38,5 +38,5 @@ spec:
             memory: {{ .Values.resources.limits.memory }} 
             cpu: {{ .Values.resources.limits.cpu }} 
         ports:
-        - containerPort: {{- if .Values.service.targetPort }} {{ .Values.service.targetPort }} {{ else }} {{ .Values.service.port }} {{ end }}
+        - containerPort: {{ .Values.containerPort }}
           protocol: {{ .Values.service.protocol }} 

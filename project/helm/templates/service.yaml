@@ -8,4 +8,4 @@ spec:
   - port: {{ .Values.service.port }} 
     protocol: {{ .Values.service.protocol }} 
     targetPort: {{- if .Values.service.targetPort }} {{ .Values.service.targetPort }} {{ else }} {{ .Values.service.port }} {{ end }}
-  type: {{ .Values.serviceType }} 
+  type: {{ .Values.service.type }} 
