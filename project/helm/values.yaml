@@ -3,7 +3,7 @@ namespace:
  
 image:
   repository: amour3000/techtrends 
-  tag: latest
+  tag: v1.0.5
   imagePullPolicy: IfNotPresent
 
 replicaCount: 1
