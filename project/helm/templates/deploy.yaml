@@ -19,17 +19,17 @@ spec:
           app: techtrends
     spec:
       containers:
-      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+      - image: {{ .Values.image.repository }}: {{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.imagePullPolicy }}
         name: techtrends
         livenessProbe:
             httpGet:
               path: {{ .Values.livenessProbe.path }} 
-              port: {{- if .Values.service.targetPort }} {{ .Values.service.targetPort }} {{ else }} {{ .Values.service.port }} {{ end }}
+              port: {{ .Values.service.port }}
         readinessProbe:
             httpGet:
               path: {{ .Values.readinessProbe.path }} 
-              port: {{- if .Values.service.targetPort }} {{ .Values.service.targetPort }} {{ else }} {{ .Values.service.port }} {{ end }}
+              port: {{ .Values.service.port }}
         resources:
           requests:
             memory: {{ .Values.resources.requests.memory }} 
@@ -38,5 +38,5 @@ spec:
             memory: {{ .Values.resources.limits.memory }} 
             cpu: {{ .Values.resources.limits.cpu }} 
         ports:
-        - containerPort: {{- if .Values.service.targetPort }} {{ .Values.service.targetPort }} {{ else }} {{ .Values.service.port }} {{ end }}
+        - containerPort: {{ .Values.service.port }}
           protocol: {{ .Values.service.protocol }} 
