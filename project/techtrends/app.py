@@ -1,5 +1,6 @@
 import datetime
 import logging
+import os
 import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
@@ -7,11 +8,13 @@ from werkzeug.exceptions import abort
 
 # Global variable for current timestamp used for logging
 current_timestamp = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+mime_type = 'application/json'
+db_file = 'database.db'
 
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
-    connection = sqlite3.connect('database.db')
+    connection = sqlite3.connect(db_file)
     connection.row_factory = sqlite3.Row
     return connection
 
@@ -78,20 +81,36 @@ def create():
 # Define a health check endpoint
 @app.route('/healthz')
 def healthcheck():
-    response = app.response_class(
+    healthy = (True, "") if os.path.isfile(db_file) else (False, "connection to the database failed")
+    if healthy[0]:
+        connection = get_db_connection()
+        posts = connection.execute(''' SELECT count(name) FROM sqlite_master WHERE type='table' AND name='posts' ''')
+        healthy = (True, "") if posts.fetchone()[0]==1 else (False, "posts table does not exist")
+    
+    if healthy[0]:
+        return app.response_class(
             response=json.dumps({"result":"OK - healthy"}),
             status=200,
-            mimetype='application/json'
-    )
-    return response
+            mimetype=mime_type
+        )
+    else:
+        return app.response_class(
+            response=json.dumps({"result":"ERROR - unhealthy, reason: " + healthy[1]}),
+            status=500,
+            mimetype=mime_type
+        )
 
 # Define a metrics endpoint for DB connections count and posts count
 @app.route('/metrics')
 def metrics():
+    conn = sqlite3.connect(db_file)
+    c = conn.cursor()
+    db_count = c.execute('SELECT count(*) FROM sqlite_master').fetchone()[0]
+    row_count = c.execute('SELECT count(*) FROM posts').fetchone()[0]
     response = app.response_class(
-            response=json.dumps({"db_connection_count": 1, "post_count": 7}),
+            response=json.dumps({"db_connection_count": db_count, "post_count": row_count}),
             status=200,
-            mimetype='application/json'
+            mimetype=mime_type
     )
 
     return response
