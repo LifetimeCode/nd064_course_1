@@ -5,7 +5,7 @@ docker build -f ./project/Dockerfile  -t techtrends ./project
 docker run -d -p 7111:3111 techtrends:latest
 
 ## Docker commands used to get the application logs
-docker logs 16e1d6475779355e79f81fa3a46076838d6155cfa8964016014760ee74185d11
+docker logs -f $(docker ps | grep techtrends:latest | tr " " "\n" | tail -1)
 
 ## Logs from the container running the TechTrends application
  * Serving Flask app 'app' (lazy loading)
@@ -13,9 +13,9 @@ docker logs 16e1d6475779355e79f81fa3a46076838d6155cfa8964016014760ee74185d11
    WARNING: This is a development server. Do not use it in a production deployment.
    Use a production WSGI server instead.
  * Debug mode: off
-WARNING:werkzeug: * Running on all addresses.
+ * Running on all addresses.
    WARNING: This is a development server. Do not use it in a production deployment.
-INFO:werkzeug: * Running on http://172.17.0.2:3111/ (Press CTRL+C to quit)
+ * Running on http://172.17.0.2:3111/ (Press CTRL+C to quit)
 INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:34] "GET / HTTP/1.1" 200 -
 INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:34] "GET /robots.txt?1689060454890 HTTP/1.1" 404 -
 INFO:werkzeug:172.17.0.1 - - [11/Jul/2023 07:27:34] "GET /static/css/main.css HTTP/1.1" 304 -

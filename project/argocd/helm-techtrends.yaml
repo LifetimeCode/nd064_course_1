@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: techtrends
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: argocd/argocd-apps
+    repoURL: https://github.com/LifetimeCode/nd064_course_1
+    targetRevision: HEAD

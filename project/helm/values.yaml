@@ -7,8 +7,10 @@ image:
 replicaCount: 1
 livenessProbe:
   path: /healthz
+  port: 3111
 readinessProbe:
   path: /healthz
+  port: 3111
 resources:
   requests:
     memory: 64Mi
