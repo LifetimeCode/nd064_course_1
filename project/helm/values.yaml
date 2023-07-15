@@ -1,31 +1,24 @@
 namespace:
   name: sandbox
- 
 image:
-  repository: amour3000/techtrends 
-  tag: v1.0.6
+  repository: amour3000/techtrends
+  tag: v1.0.13
   imagePullPolicy: IfNotPresent
-
 replicaCount: 1
-
 livenessProbe:
   path: /healthz
-
 readinessProbe:
   path: /healthz
-
 resources:
   requests:
-    memory: "64Mi"
-    cpu: "250m"
+    memory: 64Mi
+    cpu: 250m
   limits:
-    memory: "128Mi"
-    cpu: "500m"
-
+    memory: 128Mi
+    cpu: 500m
 service:
   port: 4111
   targetPort: 3111
   protocol: TCP
   type: ClusterIP
-
 containerPort: 3111
