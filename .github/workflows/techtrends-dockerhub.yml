@@ -61,3 +61,4 @@ jobs:
           targetBranch: main
           commitChange: true
           message: 'Update Image Version to ${{ steps.version.outputs.version }}'
+          token: ${{ secrets.MYGITHUB_TOKEN }}
