@@ -2,6 +2,7 @@ import datetime
 import logging
 import os
 import sqlite3
+import sys
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash
 from werkzeug.exceptions import abort
@@ -30,6 +31,17 @@ def get_post(post_id):
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
 
+# Define app logger - Record the logs to both STDOUT & STDERR
+def app_logger():
+    # set logger to handle STDOUT and STDERR 
+    stdout_handler =  logging.StreamHandler(sys.stdout)
+    stderr_handler =  logging.StreamHandler(sys.stderr)
+    handlers = [stderr_handler, stdout_handler]
+    # format output
+    format_output = '%(name)s - %(levelname)s - %(message)s'
+    logging.basicConfig(format=format_output, level=logging.DEBUG, handlers=handlers)
+    return logging.getLogger(__name__)
+
 # Define the main route of the web application 
 @app.route('/')
 def index():
@@ -44,17 +56,17 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
-      app.logger.error(current_timestamp + ', Article ID "' + str(post_id) + '" was not found! 404 page is returned')
+      app_logger().error(current_timestamp + ', Article ID "' + str(post_id) + '" was not found! 404 page is returned')
       return render_template('404.html'), 404
     else:
       post_title = post[2]
-      app.logger.info(current_timestamp + ', Article "' + post_title + '" retrieved!')
+      app_logger().info(current_timestamp + ', Article "' + post_title + '" retrieved!')
       return render_template('post.html', post=post)
 
 # Define the About Us page
 @app.route('/about')
 def about():
-    app.logger.info(current_timestamp + ', About us page is retrieved')
+    app_logger().info(current_timestamp + ', About us page is retrieved')
     return render_template('about.html')
 
 # Define the post creation functionality 
@@ -73,7 +85,7 @@ def create():
             connection.commit()
             connection.close()
 
-            app.logger.info(current_timestamp + ', Article "' + title + '" is created!')
+            app_logger().info(current_timestamp + ', Article "' + title + '" is created!')
             return redirect(url_for('index'))
 
     return render_template('create.html')
@@ -117,5 +129,4 @@ def metrics():
 
 # start the application on port 3111
 if __name__ == "__main__":
-   logging.basicConfig(level=logging.DEBUG)
    app.run(host='0.0.0.0', port='3111')
