@@ -48,7 +48,7 @@ jobs:
         id: version
         run: |
           VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-          echo "::set-output name=version::$VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
       - 
         name: Update Image Version in the related HelmChart values.yaml
         uses: fjogeleit/yaml-update-action@v0.13.1
@@ -57,5 +57,7 @@ jobs:
           propertyPath: 'image.tag'
           value: ${{ steps.version.outputs.version }}
           branch: main
+          masterBranchName: main
+          targetBranch: main
           commitChange: true
-          message: ${{ steps.version.outputs.version }}
+          message: 'Update Image Version to ${{ steps.version.outputs.version }}'
