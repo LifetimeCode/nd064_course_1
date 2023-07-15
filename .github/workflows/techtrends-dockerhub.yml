@@ -49,7 +49,11 @@ jobs:
         with:
           valueFile: 'project/helm/values.yaml'
           propertyPath: 'image.tag'
-          value: ${{ steps.meta.outputs.tags }}
+          value: |
+            VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+            echo $VERSION
           branch: main
           commitChange: true
-          message: 'Update Image Version to ${{ steps.meta.outputs.tags }}'
+          message: |
+            VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+            echo 'Update Image Version to $VERSION'
