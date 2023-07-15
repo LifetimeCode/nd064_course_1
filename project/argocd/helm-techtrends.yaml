@@ -8,6 +8,6 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: argocd/argocd-apps
+    path: project/argocd/argocd-apps
     repoURL: https://github.com/LifetimeCode/nd064_course_1
     targetRevision: HEAD
