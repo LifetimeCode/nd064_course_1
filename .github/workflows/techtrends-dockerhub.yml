@@ -43,17 +43,19 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+      -
+        name: Get Image Version
+        id: version
+        run: |
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          echo "::set-output name=version::$VERSION"
       - 
         name: Update Image Version in the related HelmChart values.yaml
         uses: fjogeleit/yaml-update-action@v0.13.1
         with:
           valueFile: 'project/helm/values.yaml'
           propertyPath: 'image.tag'
-          value: |
-            VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-            echo $VERSION
+          value: ${{ steps.version.outputs.version }}
           branch: main
           commitChange: true
-          message: |
-            VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
-            echo 'Update Image Version to $VERSION'
+          message: ${{ steps.version.outputs.version }}
