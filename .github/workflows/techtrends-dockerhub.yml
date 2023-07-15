@@ -43,3 +43,13 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+      - 
+        name: Update Image Version in the related HelmChart values.yaml
+        uses: fjogeleit/yaml-update-action@main
+        with:
+          valueFile: 'project/helm/values.yaml'
+          propertyPath: 'image.tag'
+          value: ${{ steps.meta.outputs.tags }}
+          branch: main
+          commitChange: true
+          message: 'Update Image Version to ${{ steps.meta.outputs.tags }}'
